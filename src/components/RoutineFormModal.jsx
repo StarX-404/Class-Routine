@@ -5,7 +5,7 @@ const emptyForm = { id: null, day: 'Monday', timeSlot: '', course: '', teacher: 
 
 const days = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
 
-export default function RoutineFormModal({ open, onClose, onSave, editing, timeSlots }) {
+export default function RoutineFormModal({ open, onClose, onSave, editing, prefill, timeSlots }) {
   const [form, setForm] = useState(emptyForm)
   useEffect(() => {
     const source = editing ? {
@@ -13,9 +13,9 @@ export default function RoutineFormModal({ open, onClose, onSave, editing, timeS
       notesText: (editing.notes || []).join('\n'),
       examText: (editing.exams || []).join('\n'),
       reminderText: (editing.reminders || []).join('\n'),
-    } : { ...emptyForm, timeSlot: timeSlots?.[0] || '' }
+    } : { ...emptyForm, day: prefill?.day || 'Monday', timeSlot: prefill?.timeSlot || timeSlots?.[0] || '' }
     setForm(source)
-  }, [editing, open, timeSlots])
+  }, [editing, open, timeSlots, prefill])
 
   if (!open) return null
 
