@@ -2,9 +2,9 @@ import { CalendarDays, ClipboardList, House, NotebookText, Settings, Plus } from
 import { motion } from 'framer-motion'
 
 const navItems = [
-  { key: 'dashboard', label: 'Routine', icon: House },
-  { key: 'routine', label: 'Tasks', icon: CalendarDays },
-  { key: 'exams', label: 'Grades', icon: ClipboardList },
+  { key: 'dashboard', label: 'Dashboard', icon: House },
+  { key: 'routine', label: 'Routine', icon: CalendarDays },
+  { key: 'exams', label: 'Exams', icon: ClipboardList },
   { key: 'notes', label: 'Notes', icon: NotebookText },
   { key: 'settings', label: 'Settings', icon: Settings },
 ]
