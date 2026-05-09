@@ -3,14 +3,19 @@ import { motion } from 'framer-motion'
 import Tesseract from 'tesseract.js'
 
 function parseText(text, timeSlots) {
-  const dayNames = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
   const lines = text.split('\n').map(l => l.trim()).filter(Boolean)
+  const dayNames = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
   return lines.map((line, i) => {
-    const day = dayNames.find(d => new RegExp(d, 'i').test(line)) || dayNames[i % 7]
-    const timeSlot = timeSlots.find(t => line.includes(t) || line.includes(t.split('-')[0])) || timeSlots[i % timeSlots.length]
-    const cleaned = line.replace(new RegExp(day, 'i'), '').replace(timeSlot, '').trim()
-    const parts = cleaned.split(/[,|]/).map(p => p.trim()).filter(Boolean)
-    return { id: crypto.randomUUID(), day, timeSlot, course: parts[0] || `Course ${i + 1}`, teacher: parts[1] || '', room: parts[2] || '', notes: [], exams: [], reminders: [], color: '#A7D4F6' }
+    const parts = line.split(/,|\||-/).map(p => p.trim()).filter(Boolean)
+    return {
+      id: crypto.randomUUID(),
+      day: dayNames.find(d => line.toLowerCase().includes(d.toLowerCase())) || dayNames[i % 7],
+      timeSlot: timeSlots.find(t => line.includes(t)) || timeSlots[i % timeSlots.length],
+      course: parts[0] || `Course ${i+1}`,
+      teacher: parts[1] || '',
+      room: parts[2] || '',
+      notes: [], exams: [], reminders: [], color: '#6366F1',
+    }
   })
 }
 
